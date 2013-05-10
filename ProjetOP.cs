@@ -40,7 +40,7 @@ namespace MonoGameTutorial
             graphics.PreferredBackBufferHeight = 480;
             graphics.IsFullScreen = false;
 			SoundEffect soundeffect;
-			soundeffect = Content.Load<SoundEffect>("Sounds/pixies"); 
+			soundeffect = Content.Load<SoundEffect>("Sounds/test"); 
 			soundeffect.Play();
             Window.Title = "Projet OP";
 			
