@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
-
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGameTutorial
 {
@@ -24,8 +24,6 @@ namespace MonoGameTutorial
         // Compteur pour ajouter des enemies
         long spawnTime;
 
-        // Laser
-        Sprite laser;
 
         // Fond du jeu
         Texture2D backgroundSpace;
@@ -41,7 +39,9 @@ namespace MonoGameTutorial
             graphics.PreferredBackBufferWidth = 640;
             graphics.PreferredBackBufferHeight = 480;
             graphics.IsFullScreen = false;
-
+			SoundEffect soundeffect;
+			soundeffect = Content.Load<SoundEffect>("Sounds/pixies"); 
+			soundeffect.Play();
             Window.Title = "Projet OP";
 			
 			robots = new List<Sprite>();
@@ -73,7 +73,7 @@ namespace MonoGameTutorial
                 (graphics.PreferredBackBufferWidth / 2) - girl.Width / 2,
                 graphics.PreferredBackBufferHeight - girl.Height * 2);
 			
-			laser.LoadContent("laser/laserrouge");
+
              
             base.LoadContent();
         }
@@ -109,16 +109,7 @@ namespace MonoGameTutorial
 
         private void shoot()
         {
-            if (!laser.Active)
-            {
-                // La position du laser est définie par :
-                // - la position en X du vaisseau + la moitier de sa taille
-                // - moins la moitier de la taille du laser
-                laser.Position = new Vector2(
-                    (girl.Position.X + (girl.Width / 2)) - laser.Width / 2, 
-                    girl.Position.Y);
-				laser.Active = true; // Le laser est tiré !
-            }
+
         }
 
         // Libération des ressources
@@ -126,7 +117,7 @@ namespace MonoGameTutorial
         {
 			backgroundSpace.Dispose();
             girl.UnloadContent();
-            laser.UnloadContent();
+
 
             foreach (Sprite robot in robots)
                 robot.UnloadContent();
@@ -142,7 +133,7 @@ namespace MonoGameTutorial
 
             #region Mise à jour des rectangles du vaisseau et du laser
             girl.Update(gameTime);
-            laser.Update(gameTime);
+
             #endregion
 
             #region Mise à jour des enemies
@@ -171,22 +162,12 @@ namespace MonoGameTutorial
                 if (robot.Rectangle.Intersects(girl.Rectangle))
                     finish = true;	
 				
-				// Si un laser touche un robot il disparait
-				if (laser.Rectangle.Intersects(robot.Rectangle))
-					robot.Active = false;	
+	
 				#endregion
             }
             #endregion
 
             #region Mise à jour du laser du vaisseau
-            // Si le laser n'est plus visible et qu'il a été tiré
-            // On ne le met plus à jour
-            if (laser.Active && laser.Position.Y + laser.Height <= 0)
-                laser.Active = false; // On peut maintenant retirer un autre laser
-
-            // Si le laser a été tiré on le fait monter
-            if (laser.Active)
-                laser.Position = new Vector2(laser.Position.X, laser.Position.Y - laser.Speed.Y);
 
             // Tire le laser
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -235,8 +216,7 @@ namespace MonoGameTutorial
             // On affiche le vaisseau à la position définie dans Update()
             girl.Draw(spriteBatch);
 
-            // Si le laser est tiré on le dessine
-            laser.Draw(spriteBatch);
+
 
             // On dessine chaque robot actif
             foreach (Sprite robot in robots)

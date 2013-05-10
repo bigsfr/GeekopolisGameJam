@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetOP", "ProjetOP.csproj", "{4BE015BB-B89A-4A4E-A433-CF5D5E59F27F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F3DD20F-7226-4F24-84C7-FCB6D0139691}"
+	ProjectSection(SolutionItems) = preProject
+		bin\Release\Content\pixies.wav = bin\Release\Content\pixies.wav
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +18,8 @@ Global
 		{4BE015BB-B89A-4A4E-A433-CF5D5E59F27F}.Debug|x86.Build.0 = Debug|x86
 		{4BE015BB-B89A-4A4E-A433-CF5D5E59F27F}.Release|x86.ActiveCfg = Release|x86
 		{4BE015BB-B89A-4A4E-A433-CF5D5E59F27F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ProjetOP.csproj
