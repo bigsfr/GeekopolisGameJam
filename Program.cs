@@ -6,12 +6,12 @@ namespace MonoGameTutorial
 {
     static class Program
     {
-        private static SpaceGame game;
+        private static ProjetOP game;
 
         [STAThread]
         static void Main()
         {
-            game = new SpaceGame();
+            game = new ProjetOP();
             game.Run();
         }
     }
