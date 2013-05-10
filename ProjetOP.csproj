@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4BE015BB-B89A-4A4E-A433-CF5D5E59F27F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SpaceGame</RootNamespace>
-    <AssemblyName>SpaceGame</AssemblyName>
+    <RootNamespace>ProjetOP</RootNamespace>
+    <AssemblyName>ProjetOP</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>

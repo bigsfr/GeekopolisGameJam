@@ -10,14 +10,14 @@ include $(top_srcdir)/config.make
 ifeq ($(CONFIG),DEBUG_X86)
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG;"
-ASSEMBLY = bin/Debug/SpaceGame.exe
+ASSEMBLY = bin/Debug/ProjetOP.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Debug
 
-SPACEGAME_EXE_MDB_SOURCE=bin/Debug/SpaceGame.exe.mdb
-SPACEGAME_EXE_MDB=$(BUILD_DIR)/SpaceGame.exe.mdb
+PROJETOP_EXE_MDB_SOURCE=bin/Debug/ProjetOP.exe.mdb
+PROJETOP_EXE_MDB=$(BUILD_DIR)/ProjetOP.exe.mdb
 GAMEPADBRIDGE_DLL_SOURCE=Externals/GamepadBridge.dll
 TAO_SDL_DLL_SOURCE=Externals/Tao.Sdl.dll
 GAMEPADCONFIGCONTROLS_DLL_SOURCE=Externals/GamepadConfigControls.dll
@@ -30,13 +30,13 @@ endif
 ifeq ($(CONFIG),RELEASE_X86)
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize-
-ASSEMBLY = bin/Release/SpaceGame.exe
+ASSEMBLY = bin/Release/ProjetOP.exe
 ASSEMBLY_MDB = 
 COMPILE_TARGET = exe
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Release
 
-SPACEGAME_EXE_MDB=
+PROJETOP_EXE_MDB=
 GAMEPADBRIDGE_DLL_SOURCE=Externals/GamepadBridge.dll
 TAO_SDL_DLL_SOURCE=Externals/Tao.Sdl.dll
 GAMEPADCONFIGCONTROLS_DLL_SOURCE=Externals/GamepadConfigControls.dll
@@ -50,7 +50,7 @@ AL=al
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(SPACEGAME_EXE_MDB) \
+	$(PROJETOP_EXE_MDB) \
 	$(GAMEPADBRIDGE_DLL) \
 	$(TAO_SDL_DLL) \
 	$(GAMEPADCONFIGCONTROLS_DLL) \
@@ -132,7 +132,7 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	mkdir -p '$(DESTDIR)$(libdir)/$(PACKAGE)'
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(SPACEGAME_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(PROJETOP_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(GAMEPADBRIDGE_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(TAO_SDL_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(GAMEPADCONFIGCONTROLS_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
@@ -148,7 +148,7 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	make uninstall-satellite-assemblies prefix=$(prefix)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(SPACEGAME_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(PROJETOP_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(GAMEPADBRIDGE_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(TAO_SDL_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(GAMEPADCONFIGCONTROLS_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
