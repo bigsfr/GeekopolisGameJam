@@ -1,24 +1,43 @@
 Splashcreen a faire :
 
 
-Ecran de démarrage :
+Ecran de démarrage (EcranDemarrage.jpg) :
 Titre du jeu et Touche quand pret
 
 
-Ecran Post Plongée en enfance :
+Ecran Post Plongée en enfance (EcranDebut) :
 Ecrire Memoire + Un texte de petite fille.
 
-Chambre des parents :
+Chambre des parents (EcranParentDebut) :
 Petit Texte + Explication Gameplay
 Fermez les yeux et appuyez sur une touche
 
-Cave :
+Chambre des Parents bon choix  (EcranParentBon) :
+Petit Texte
+
+Chambre des Parents Mauvais choix  (EcranParentMauvais) :
+Petit Texte
+
+Cave (Cave):
 Petit Texte + Explication Gameplay
 Fermez les yeux et appuyez sur une touche
+
+Cave bon choix (caveBON):
+Petit texte
+
+
+
+Cave Mauvais choix (cavemauvais):
+Petit texte
 
 Cuisine :
 Petit Texte + Explication Gameplay
 Fermez les yeux et appuyez sur une touche
+
+Cuisine mauvais (CuisineMauvais) :
+Petit texte
+
+Cuisine bon (cuisineBon):
 
 Fin :
 Petit texte de fin.
