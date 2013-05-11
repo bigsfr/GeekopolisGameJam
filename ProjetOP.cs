@@ -17,7 +17,7 @@ namespace MonoGameTutorial
 		// Vaisseau
 		Sprite girl;
 
-
+		int compteurenigme;
 
 		// Compteur pour ajouter des enemies
 		long spawnTime;
@@ -36,12 +36,15 @@ namespace MonoGameTutorial
 		bool jardin  ;
 		bool iscave;
 		bool issalon;
-
+		bool isecrandebut;
 
 		SpriteFont font;
 		Vector2 textSize;
 		SoundEffect soundeffect;
+
 		int time;
+
+		string inputdebut;
 					
 		public ProjetOP ()
 		{
@@ -62,7 +65,7 @@ namespace MonoGameTutorial
 		{
 
 
-
+			compteurenigme = 0;
 			finish = false;
 			chambre_parent = false;
 			chambre_enfant = false;
@@ -70,8 +73,10 @@ namespace MonoGameTutorial
 			salledebain = false;
 			jardin = false;
 			iscave = false;
-			issalon = true;
+			issalon = false;
+			isecrandebut = true;
 			time = 0;
+			inputdebut = "";
 			 
 
 			base.Initialize ();
@@ -90,10 +95,12 @@ namespace MonoGameTutorial
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
 			// Fond de l'écran
-			background = Content.Load<Texture2D> ("Salon");
+			background = Content.Load<Texture2D> ("EcranDebut");
 
 
-			// Texture du vaisseau
+
+
+			// Texture de la fille
 			girl.LoadContent ("Girl");
 
 
@@ -102,9 +109,9 @@ namespace MonoGameTutorial
 			girl.Position = new Vector2 (
                 (graphics.PreferredBackBufferWidth / 2) - girl.Width / 2,
                 graphics.PreferredBackBufferHeight - girl.Height * 2);
-
+			girl.LoadContent ("Black");
 	
-             
+             isecrandebut = true;
 			base.LoadContent ();
 		}
 
@@ -115,7 +122,9 @@ namespace MonoGameTutorial
 			background = Content.Load<Texture2D> ("Salon");
 			// Texture de la fille
 			girl.LoadContent ("Girl");
-			soundeffect = Content.Load<SoundEffect> ("Sounds/Salon"); 
+			soundeffect.Dispose();
+			soundeffect = new SoundEffect();
+			soundsalon = Content.Load<SoundEffect> ("Sounds/Salon"); 
 
 
 		}
@@ -193,8 +202,66 @@ namespace MonoGameTutorial
 				}
 			}
 
+			if (isecrandebut)
+			{
+
+				if (Keyboard.GetState ().IsKeyDown(Keys.Back))
+				{
+					inputdebut = "";
+				}
+				if (Keyboard.GetState ().IsKeyDown(Keys.M))
+				{
+					if (compteurenigme ==0 || compteurenigme == 2)
+					{
+					inputdebut += "M";
+						compteurenigme += 1;
+					}
+				}
+
+					if (Keyboard.GetState ().IsKeyDown(Keys.E))
+				{
+					if (compteurenigme == 1 || compteurenigme == 6)
+					{
+					inputdebut += "E";
+						compteurenigme += 1;
+					}
+				}
+					if (Keyboard.GetState ().IsKeyDown(Keys.O))
+				{
+					if (compteurenigme == 3)
+					{
+					inputdebut += "O";
+						compteurenigme += 1;
+					}
+				}
+				if (Keyboard.GetState ().IsKeyDown(Keys.I))
+				{
+
+								if (compteurenigme == 4)
+					{
+					inputdebut += "I";
+						compteurenigme += 1;
+					}
+				}
+				if (Keyboard.GetState ().IsKeyDown(Keys.R))
+				{
+													if (compteurenigme == 5)
+					{
+					inputdebut += "R"; 
+						compteurenigme += 1;
+					}
+
+				}
+
+				if (inputdebut == "MEMOIRE")
+				{
+					Salon();
+				}
+
+			}
+
 			if (Keyboard.GetState ().IsKeyDown (Keys.Z)) {
-				Salon ();
+				Salon();
 			}
 
 			if (iscave) {
@@ -207,13 +274,25 @@ namespace MonoGameTutorial
 			base.Update (gameTime);
 		}
 
-		protected  void Cave ()
+		protected  void Cave()
+		{
+			isecrandebut = false;
+			issalon = false;
+			girl.LoadContent ("Black");
+			background = Content.Load<Texture2D> ("Cave");
+			girl.Position = new Vector2 (345, 21);
+			soundeffect.Dispose();
+			soundeffect = new SoundEffect();
+			soundeffect = Content.Load<SoundEffect> ("Sounds/Cave"); 
+		}
+
+		protected void EcranDebut()
 		{
 			issalon = false;
 			iscave = true;
 			girl.LoadContent ("Black");
-			background = Content.Load<Texture2D> ("Cave");
-			girl.Position = new Vector2 (345, 21);
+			background = Content.Load<Texture2D> ("EcranDebut");
+
 		}
 
 		protected override void Draw (GameTime gameTime)
@@ -238,6 +317,10 @@ namespace MonoGameTutorial
 			spriteBatch.DrawString (font, "time:" + time, new Vector2 (10, 70), Color.White);
 
 			spriteBatch.DrawString (font, "gameTime:" + gameTime.TotalRealTime.Seconds, new Vector2 (10, 100), Color.White);			
+
+
+			spriteBatch.DrawString (font, "ipniutdebut:"+inputdebut, new Vector2 (10, 130), Color.White);			
+
 
 			// On affiche le vaisseau à la position définie dans Update()
 			girl.Draw (spriteBatch);
