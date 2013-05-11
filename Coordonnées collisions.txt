@@ -1,0 +1,44 @@
+Coordonnées portes : 
+
+- Cave  X:353 Y:6 ; X:337 Y:6
+
+- Extérieur  X:491 Y:42 ; X:491 Y:78
+
+- Chambre des parents  X:329 Y:378 ; X:329 Y:392
+
+- Salle de bains  X:329 Y:430 ; X:329 Y:444
+
+- Etage/chambre des enfants  X:261 Y:304 ; X:273 Y:304
+
+- Cuisine  X:163 Y:282 ; X:181 Y:282
+
+
+Coordonnées murs :
+- X:487 Y:102 ; X:487 Y:350
+
+- X:487 Y:350 ; X:351 Y:350
+
+- X:351 Y:350 ; X:351 Y:300
+
+- X:337 Y:420 ; X:337 Y:406
+
+- X:325 Y:446 ; X:259 Y:446
+
+- X:259 Y:446 ; X:261 Y:302
+
+- X:299 Y:300 ; X:299 Y:418
+
+- X:275 Y:278 ; X:205 Y:278
+
+- X:139 Y:278 ; X:129 Y:278
+
+- X:129 Y:278 ; X:129 Y:10
+
+- X:129 Y:10 ; X:315 Y:10
+
+- X:375 Y:10 ; X:487 Y:10
+
+- X:487 Y:10 ; X:487 Y:18
+
+
+
