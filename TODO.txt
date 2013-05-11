@@ -1,0 +1,25 @@
+Splashcreen a faire :
+
+
+Ecran de démarrage :
+Titre du jeu et Touche quand pret
+
+
+Ecran Post Plongée en enfance :
+Ecrire Memoire + Un texte de petite fille.
+
+Chambre des parents :
+Petit Texte + Explication Gameplay
+Fermez les yeux et appuyez sur une touche
+
+Cave :
+Petit Texte + Explication Gameplay
+Fermez les yeux et appuyez sur une touche
+
+Cuisine :
+Petit Texte + Explication Gameplay
+Fermez les yeux et appuyez sur une touche
+
+Fin :
+Petit texte de fin.
+
