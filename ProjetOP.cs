@@ -31,6 +31,13 @@ namespace MonoGameTutorial
         // Fin du jeu ?
         bool finish;
 
+				bool	chambre_parent;
+			bool chambre_enfant;
+			bool cuisine  ;
+			bool salledebain;
+			bool jardin  ;
+			bool cave;
+
         public ProjetOP()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -55,6 +62,15 @@ namespace MonoGameTutorial
             robots.Clear();
             spawnTime = 0;
             finish = false;
+			chambre_parent = false;
+			chambre_enfant = false;
+			cuisine = false ;
+			salledebain = false;
+			jardin = false ;
+			cave = false;
+
+
+
             base.Initialize();
         }
 
@@ -63,7 +79,7 @@ namespace MonoGameTutorial
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Fond de l'écran
-            backgroundSpace = Content.Load<Texture2D>("background-space");
+            backgroundSpace = Content.Load<Texture2D>("Salon");
 
             // Texture du vaisseau
 			girl.LoadContent("ship/spaceship");
