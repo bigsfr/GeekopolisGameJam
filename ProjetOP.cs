@@ -69,7 +69,7 @@ namespace MonoGameTutorial
 			jardin = false ;
 			cave = false;
 
-
+			 
 
             base.Initialize();
         }
@@ -82,7 +82,7 @@ namespace MonoGameTutorial
             backgroundSpace = Content.Load<Texture2D>("Salon");
 
             // Texture du vaisseau
-			girl.LoadContent("ship/spaceship");
+			girl.LoadContent("girl");
 
             // Position initiale du vaisseau
             girl.Position = new Vector2(
