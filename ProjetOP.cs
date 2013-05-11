@@ -83,7 +83,7 @@ Vector2 textSize;
 
         protected override void LoadContent()
         {
-			soundeffect = Content.Load<SoundEffect>("Sounds/test"); 
+			soundeffect = Content.Load<SoundEffect>("Sounds/Salon"); 
 			soundeffect.Play ();
 			girl = new Sprite(this);
 			girl.Speed = new Vector2(2, 2);
@@ -94,7 +94,7 @@ Vector2 textSize;
 
 
             // Texture du vaisseau
-			girl.LoadContent("girl");
+			girl.LoadContent("Girl");
 
 
 
@@ -114,8 +114,8 @@ Vector2 textSize;
 			   // Fond de l'écran
 			background = Content.Load<Texture2D>("Salon");
             // Texture de la fille
-			girl.LoadContent("girl");
-			soundeffect = Content.Load<SoundEffect>("Sounds/test"); 
+			girl.LoadContent("Girl");
+			soundeffect = Content.Load<SoundEffect>("Sounds/Salon"); 
 
 
 		}
@@ -207,7 +207,7 @@ Vector2 textSize;
 		{
 			issalon = false;
 			iscave = true;
-			girl.LoadContent("black");
+			girl.LoadContent("Black");
 			background = Content.Load<Texture2D>("Cave");
 			girl.Position = new Vector2(345,21);
 		}
