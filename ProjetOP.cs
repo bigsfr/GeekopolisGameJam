@@ -39,7 +39,9 @@ namespace MonoGameTutorial
 
 			SpriteFont font;
 Vector2 textSize;
-
+				SoundEffect soundeffect;
+		int time;
+					
         public ProjetOP()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -48,10 +50,9 @@ Vector2 textSize;
             graphics.PreferredBackBufferWidth = 640;
             graphics.PreferredBackBufferHeight = 480;
             graphics.IsFullScreen = false;
-			SoundEffect soundeffect;
-			soundeffect = Content.Load<SoundEffect>("Sounds/test"); 
-			soundeffect.Play();
-            Window.Title = "Projet OP";
+
+
+	
 			
 
         }
@@ -70,10 +71,13 @@ Vector2 textSize;
 			salledebain = false;
 			jardin = false ;
 			cave = false;
-
+			time = 0;
 			 
 
             base.Initialize();
+			soundeffect = Content.Load<SoundEffect>("Sounds/test"); 
+			soundeffect.Play ();
+            Window.Title = "Projet OP";
         }
 
         protected override void LoadContent()
@@ -116,6 +120,21 @@ Vector2 textSize;
 
         protected override void Update(GameTime gameTime)
         {
+	
+
+
+			if (gameTime.TotalRealTime.Seconds % 8 == 0)
+			{
+				if (time != gameTime.TotalRealTime.Seconds){
+					time = gameTime.TotalRealTime.Seconds;
+
+							soundeffect.Play();
+				}
+
+
+			}
+
+
             // On quitte le jeu
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
@@ -162,9 +181,16 @@ Vector2 textSize;
             spriteBatch.Draw(backgroundSalon, Vector2.Zero, Color.White);
 
 
-										font = Content.Load<SpriteFont>("SpriteFont1");
+			font = Content.Load<SpriteFont>("SpriteFont1");
 
 			spriteBatch.DrawString(font,"X:"+girl.Position.X+"Y:"+girl.Position.Y,new Vector2(10,10),Color.White);
+
+
+			spriteBatch.DrawString(font,soundeffect.Duration.ToString(),new Vector2(10,40),Color.White);
+
+			spriteBatch.DrawString(font,"time:"+time,new Vector2(10,70),Color.White);
+
+			spriteBatch.DrawString(font,"gametime:"+gameTime.TotalRealTime.Seconds,new Vector2(10,100),Color.White);			
 
             // On affiche le vaisseau à la position définie dans Update()
             girl.Draw(spriteBatch);
