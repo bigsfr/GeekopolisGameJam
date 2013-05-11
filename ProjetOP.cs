@@ -37,6 +37,9 @@ namespace MonoGameTutorial
 			bool jardin  ;
 			bool cave;
 
+			SpriteFont font;
+Vector2 textSize;
+
         public ProjetOP()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -84,6 +87,8 @@ namespace MonoGameTutorial
             // Texture du vaisseau
 			girl.LoadContent("girl");
 
+
+
             // Position initiale du vaisseau
             girl.Position = new Vector2(
                 (graphics.PreferredBackBufferWidth / 2) - girl.Width / 2,
@@ -123,11 +128,6 @@ namespace MonoGameTutorial
 
 			
             #region Mise à jour du vaisseau
-            // Gestion de l'accélération du vaisseau
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
-                girl.Speed = new Vector2(5, 5);
-            else
-                girl.Speed = new Vector2(2, 2);
 
             // Déplacement du vaisseau et gestion des collisions avec les bords
             if (Keyboard.GetState().IsKeyDown(Keys.Up) && girl.Position.Y > 0)
@@ -160,6 +160,11 @@ namespace MonoGameTutorial
 
             // On affichage le fond à la position 0, 0
             spriteBatch.Draw(backgroundSalon, Vector2.Zero, Color.White);
+
+
+										font = Content.Load<SpriteFont>("SpriteFont1");
+
+			spriteBatch.DrawString(font,"X:"+girl.Position.X+"Y:"+girl.Position.Y,new Vector2(10,10),Color.White);
 
             // On affiche le vaisseau à la position définie dans Update()
             girl.Draw(spriteBatch);
