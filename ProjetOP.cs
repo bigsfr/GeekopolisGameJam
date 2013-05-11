@@ -16,7 +16,6 @@ namespace MonoGameTutorial
 
 		// Vaisseau
 		Sprite girl;
-
 		int compteurenigme;
 
 		// Compteur pour ajouter des enemies
@@ -28,7 +27,6 @@ namespace MonoGameTutorial
 
 		// Fin du jeu ?
 		bool finish;
-
 		bool	chambre_parent;
 		bool chambre_enfant;
 		bool cuisine  ;
@@ -37,13 +35,11 @@ namespace MonoGameTutorial
 		bool iscave;
 		bool issalon;
 		bool isecrandebut;
-
 		SpriteFont font;
 		Vector2 textSize;
 		SoundEffect soundeffect;
-
+		SoundEffectInstance soundEffectInstance;
 		int time;
-
 		string inputdebut;
 					
 		public ProjetOP ()
@@ -89,7 +85,9 @@ namespace MonoGameTutorial
 		protected override void LoadContent ()
 		{
 			soundeffect = Content.Load<SoundEffect> ("Sounds/Salon"); 
-			soundeffect.Play ();
+			soundEffectInstance = soundeffect.CreateInstance ();
+			soundEffectInstance.IsLooped = true;
+			soundEffectInstance.Play ();
 			girl = new Sprite (this);
 			girl.Speed = new Vector2 (2, 2);
 			spriteBatch = new SpriteBatch (GraphicsDevice);
@@ -111,21 +109,29 @@ namespace MonoGameTutorial
                 graphics.PreferredBackBufferHeight - girl.Height * 2);
 			girl.LoadContent ("Black");
 	
-             isecrandebut = true;
+			isecrandebut = true;
 			base.LoadContent ();
 		}
 
 		protected  void Salon ()
 		{
 			issalon = true;
+			chambre_parent = false;
+			chambre_enfant = false;
+			cuisine = false;
+			salledebain = false;
+			jardin = false;
+			iscave = false;
 			// Fond de l'écran
 			background = Content.Load<Texture2D> ("Salon");
 			// Texture de la fille
 			girl.LoadContent ("Girl");
-			soundeffect.Dispose();
-			soundeffect = new SoundEffect();
-			soundsalon = Content.Load<SoundEffect> ("Sounds/Salon"); 
 
+			soundEffectInstance.Stop ();
+			soundeffect = Content.Load<SoundEffect> ("Sounds/Salon"); 
+			soundEffectInstance = soundeffect.CreateInstance ();
+			soundEffectInstance.IsLooped = true;
+			soundEffectInstance.Play ();
 
 		}
 
@@ -146,17 +152,7 @@ namespace MonoGameTutorial
 		{
 	
 
-
-			if (gameTime.TotalRealTime.Seconds % 8 == 0) {
-				if (time != gameTime.TotalRealTime.Seconds) {
-					time = gameTime.TotalRealTime.Seconds;
-
-					soundeffect.Play ();
-				}
-
-
-			}
-
+			
 
 			// On quitte le jeu
 			if (Keyboard.GetState ().IsKeyDown (Keys.Escape))
@@ -189,8 +185,7 @@ namespace MonoGameTutorial
 
 
 				// bloque contre la rembarde tristan
-				if ((girl.Position.X >= 281 && girl.Position.X <= 291) && (girl.Position.Y >= 302 &&girl.Position.Y <= 434))
-				{
+				if ((girl.Position.X >= 281 && girl.Position.X <= 291) && (girl.Position.Y >= 302 && girl.Position.Y <= 434)) {
 					girl.Position = old;
 				}
 
@@ -202,68 +197,57 @@ namespace MonoGameTutorial
 				}
 			}
 
-			if (isecrandebut)
-			{
+			if (isecrandebut) {
 
-				if (Keyboard.GetState ().IsKeyDown(Keys.Back))
-				{
+				if (Keyboard.GetState ().IsKeyDown (Keys.Back)) {
 					inputdebut = "";
 				}
-				if (Keyboard.GetState ().IsKeyDown(Keys.M))
-				{
-					if (compteurenigme ==0 || compteurenigme == 2)
-					{
-					inputdebut += "M";
+				if (Keyboard.GetState ().IsKeyDown (Keys.M)) {
+					if (compteurenigme == 0 || compteurenigme == 2) {
+						inputdebut += "M";
 						compteurenigme += 1;
 					}
 				}
 
-					if (Keyboard.GetState ().IsKeyDown(Keys.E))
-				{
-					if (compteurenigme == 1 || compteurenigme == 6)
-					{
-					inputdebut += "E";
+				if (Keyboard.GetState ().IsKeyDown (Keys.E)) {
+					if (compteurenigme == 1 || compteurenigme == 6) {
+						inputdebut += "E";
 						compteurenigme += 1;
 					}
 				}
-					if (Keyboard.GetState ().IsKeyDown(Keys.O))
-				{
-					if (compteurenigme == 3)
-					{
-					inputdebut += "O";
+				if (Keyboard.GetState ().IsKeyDown (Keys.O)) {
+					if (compteurenigme == 3) {
+						inputdebut += "O";
 						compteurenigme += 1;
 					}
 				}
-				if (Keyboard.GetState ().IsKeyDown(Keys.I))
-				{
+				if (Keyboard.GetState ().IsKeyDown (Keys.I)) {
 
-								if (compteurenigme == 4)
-					{
-					inputdebut += "I";
+					if (compteurenigme == 4) {
+						inputdebut += "I";
 						compteurenigme += 1;
 					}
 				}
-				if (Keyboard.GetState ().IsKeyDown(Keys.R))
-				{
-													if (compteurenigme == 5)
-					{
-					inputdebut += "R"; 
+				if (Keyboard.GetState ().IsKeyDown (Keys.R)) {
+					if (compteurenigme == 5) {
+						inputdebut += "R"; 
 						compteurenigme += 1;
 					}
 
 				}
 
-				if (inputdebut == "MEMOIRE")
-				{
-					Salon();
+				if (inputdebut == "MEMOIRE") {
+					inputdebut = "";
+					Salon ();
 				}
 
 			}
 
+			if (iscave){
 			if (Keyboard.GetState ().IsKeyDown (Keys.Z)) {
-				Salon();
+				Salon ();
 			}
-
+			}
 			if (iscave) {
 			}
 
@@ -274,19 +258,24 @@ namespace MonoGameTutorial
 			base.Update (gameTime);
 		}
 
-		protected  void Cave()
+		protected  void Cave ()
 		{
-			isecrandebut = false;
+
 			issalon = false;
+			iscave = true;
 			girl.LoadContent ("Black");
 			background = Content.Load<Texture2D> ("Cave");
 			girl.Position = new Vector2 (345, 21);
-			soundeffect.Dispose();
-			soundeffect = new SoundEffect();
+
+			soundEffectInstance.Stop ();
 			soundeffect = Content.Load<SoundEffect> ("Sounds/Cave"); 
+			soundEffectInstance = soundeffect.CreateInstance ();
+			soundEffectInstance.IsLooped = true;
+			soundEffectInstance.Play ();
+
 		}
 
-		protected void EcranDebut()
+		protected void EcranDebut ()
 		{
 			issalon = false;
 			iscave = true;
@@ -319,7 +308,7 @@ namespace MonoGameTutorial
 			spriteBatch.DrawString (font, "gameTime:" + gameTime.TotalRealTime.Seconds, new Vector2 (10, 100), Color.White);			
 
 
-			spriteBatch.DrawString (font, "ipniutdebut:"+inputdebut, new Vector2 (10, 130), Color.White);			
+			spriteBatch.DrawString (font, "ipniutdebut:" + inputdebut, new Vector2 (10, 130), Color.White);			
 
 
 			// On affiche le vaisseau à la position définie dans Update()
