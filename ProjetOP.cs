@@ -17,7 +17,6 @@ namespace MonoGameTutorial
         // Vaisseau
 		Sprite girl;
 
-        // Enemies
 
 
         // Compteur pour ajouter des enemies
@@ -25,7 +24,7 @@ namespace MonoGameTutorial
 
 
         // Fond du jeu
-        Texture2D backgroundSalon;
+        Texture2D background;
 
         // Fin du jeu ?
         bool finish;
@@ -35,7 +34,9 @@ namespace MonoGameTutorial
 			bool cuisine  ;
 			bool salledebain;
 			bool jardin  ;
-			bool cave;
+		bool iscave;
+		bool issalon;
+
 
 			SpriteFont font;
 Vector2 textSize;
@@ -59,9 +60,7 @@ Vector2 textSize;
 
         protected override void Initialize()
         {
-			girl = new Sprite(this);
 
-			girl.Speed = new Vector2(2, 2);
 
 
             finish = false;
@@ -70,22 +69,28 @@ Vector2 textSize;
 			cuisine = false ;
 			salledebain = false;
 			jardin = false ;
-			cave = false;
+			iscave = false;
+			issalon = true;
 			time = 0;
 			 
 
             base.Initialize();
-			soundeffect = Content.Load<SoundEffect>("Sounds/test"); 
-			soundeffect.Play ();
+
             Window.Title = "Projet OP";
+
+
         }
 
         protected override void LoadContent()
         {
+			soundeffect = Content.Load<SoundEffect>("Sounds/test"); 
+			soundeffect.Play ();
+			girl = new Sprite(this);
+			girl.Speed = new Vector2(2, 2);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Fond de l'écran
-            backgroundSalon = Content.Load<Texture2D>("Salon");
+            background = Content.Load<Texture2D>("Salon");
 
 
             // Texture du vaisseau
@@ -97,20 +102,30 @@ Vector2 textSize;
             girl.Position = new Vector2(
                 (graphics.PreferredBackBufferWidth / 2) - girl.Width / 2,
                 graphics.PreferredBackBufferHeight - girl.Height * 2);
-			
 
+	
              
             base.LoadContent();
         }
 
-      
+       protected  void Salon()
+		{
+			issalon = true;
+			   // Fond de l'écran
+			background = Content.Load<Texture2D>("Salon");
+            // Texture de la fille
+			girl.LoadContent("girl");
+			soundeffect = Content.Load<SoundEffect>("Sounds/test"); 
+
+
+		}
 
 
 
         // Libération des ressources
         protected override void UnloadContent()
         {
-			backgroundSalon.Dispose();
+			background.Dispose();
             girl.UnloadContent();
 
 
@@ -146,8 +161,10 @@ Vector2 textSize;
 
 
 			
-            #region Mise à jour du vaisseau
+            #region Mise à jour du salon
 
+			if (issalon)
+			{
             // Déplacement du vaisseau et gestion des collisions avec les bords
             if (Keyboard.GetState().IsKeyDown(Keys.Up) && girl.Position.Y > 0)
                 girl.Position = new Vector2(girl.Position.X, girl.Position.Y - girl.Speed.Y);
@@ -162,12 +179,38 @@ Vector2 textSize;
                 girl.Position = new Vector2(girl.Position.X + girl.Speed.X, girl.Position.Y);
             #endregion
 
+			if ((girl.Position.X >= 331 && girl.Position.X <= 357) && (girl.Position.Y <= 8))
+			{
+
+				Cave();
+
+			}
+			}
+
+			if (Keyboard.GetState().IsKeyDown(Keys.Z))
+			{
+				Salon();
+			}
+
+			if (iscave)
+			{
+			}
+
             // Si la partie est terminée on réinitialise le tout
             if (finish)
                 Initialize();
 
             base.Update(gameTime);
         }
+
+		protected  void Cave()
+		{
+			issalon = false;
+			iscave = true;
+			girl.LoadContent("black");
+			background = Content.Load<Texture2D>("Cave");
+			girl.Position = new Vector2(345,21);
+		}
 
         protected override void Draw(GameTime gameTime)
         {
@@ -178,7 +221,7 @@ Vector2 textSize;
             spriteBatch.Begin();
 
             // On affichage le fond à la position 0, 0
-            spriteBatch.Draw(backgroundSalon, Vector2.Zero, Color.White);
+            spriteBatch.Draw(background, Vector2.Zero, Color.White);
 
 
 			font = Content.Load<SpriteFont>("SpriteFont1");
@@ -190,7 +233,7 @@ Vector2 textSize;
 
 			spriteBatch.DrawString(font,"time:"+time,new Vector2(10,70),Color.White);
 
-			spriteBatch.DrawString(font,"gametime:"+gameTime.TotalRealTime.Seconds,new Vector2(10,100),Color.White);			
+			spriteBatch.DrawString(font,"gameTime:"+gameTime.TotalRealTime.Seconds,new Vector2(10,100),Color.White);			
 
             // On affiche le vaisseau à la position définie dans Update()
             girl.Draw(spriteBatch);

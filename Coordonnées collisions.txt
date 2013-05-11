@@ -1,6 +1,6 @@
 Coordonnées portes : 
 
-- Cave  X:353 Y:6 ; X:337 Y:6
+- Cave  X:357 Y:10 ; X:331 Y:8
 
 - Extérieur  X:491 Y:42 ; X:491 Y:78
 
