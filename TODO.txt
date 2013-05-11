@@ -18,7 +18,7 @@ Petit Texte
 Chambre des Parents Mauvais choix  (EcranParentMauvais) :
 Petit Texte
 
-Cave (Cave):
+Cave (EcranCave):
 Petit Texte + Explication Gameplay
 Fermez les yeux et appuyez sur une touche
 
@@ -39,6 +39,6 @@ Petit texte
 
 Cuisine bon (cuisineBon):
 
-Fin :
+Ecran Fin :
 Petit texte de fin.
 
