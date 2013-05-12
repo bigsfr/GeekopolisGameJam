@@ -1,6 +1,8 @@
 GeekopolisGameJam
 =================
 
+![Alt text](http://imageshack.us/a/img823/1940/screenwhatif.jpg)
+
 The code for the geekopolis game jam
 
 
@@ -16,4 +18,12 @@ http://connect.creativelabs.com/developer/Wiki/OpenAL%20Installer%20for%20Window
 
 
 L'executable est dans bin/Debug
+
+Ou dans le zip utilisez ProjetOp.exe
+
+
+Pour la version Linux utiliser Mono sur ProjetOp.exe
+
+Lien direct pour une version windows :
+
 
