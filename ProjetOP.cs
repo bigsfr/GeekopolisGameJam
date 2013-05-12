@@ -44,6 +44,7 @@
 		bool chambrev2;
 		bool chambrev3;
 		bool chambrev4;
+		bool vsalon;
 		bool lettref;
 		bool lettreo;
 		bool lettrel;
@@ -216,6 +217,7 @@
 						// Texture de la fille
 						girl.LoadContent ("Girl");
 
+	
 						soundEffectInstance.Stop ();
 						soundeffect = Content.Load<SoundEffect> ("Sounds/Salon");
 						soundEffectInstance = soundeffect.CreateInstance ();
@@ -225,26 +227,32 @@
 			
 			if (cuisinevalid && lettref)
 			{
+				soundEffectInstance.Stop ();
 						soundeffect = Content.Load<SoundEffect> ("Sounds/F");
 						soundEffectInstance = soundeffect.CreateInstance ();
 						soundEffectInstance.Play ();
 						lettref = false;
+
 			}
 
 						if (chambrevalid && lettrei)
 			{
+				soundEffectInstance.Stop ();
 						soundeffect = Content.Load<SoundEffect> ("Sounds/I");
 						soundEffectInstance = soundeffect.CreateInstance ();
 						soundEffectInstance.Play ();
 						lettrei = false;
+
 			}
 
 			if (cavevalid && lettreo)
 			{
+				soundEffectInstance.Stop ();
 						soundeffect = Content.Load<SoundEffect> ("Sounds/O");
 						soundEffectInstance = soundeffect.CreateInstance ();
 						soundEffectInstance.Play ();
 						lettreo = false;
+
 			}
 
 		
@@ -253,6 +261,7 @@
 
 				protected void Fin()
 				{
+
 								inputdebut = "";
 						issalon = false;
 						ischambre= false;
@@ -264,12 +273,15 @@
 					girl.LoadContent ("Black");
 						background = Content.Load<Texture2D> ("EcranFin");
 						girl.Position = new Vector2 (345, 21);
+			soundEffectInstance.Pause();
+			soundEffectInstance.Stop ();
 
-						soundEffectInstance.Stop ();
-						soundeffect = Content.Load<SoundEffect> ("Sounds/Final");
-						soundEffectInstance = soundeffect.CreateInstance ();
-						soundEffectInstance.IsLooped = false;
-						soundEffectInstance.Play ();
+						soundEffectInstance.Dispose ();
+						soundeffect.Dispose();
+						soundeffect2 = Content.Load<SoundEffect> ("Sounds/Final");
+						soundEffectInstance2 = soundeffect2.CreateInstance ();
+						soundEffectInstance2.IsLooped = false;
+						soundEffectInstance2.Play ();
 				}
 
 
@@ -278,6 +290,8 @@
 					{
 						background.Dispose ();
 						girl.UnloadContent ();
+						soundEffectInstance.Dispose();
+						soundeffect.Dispose();
 
 
 
@@ -331,6 +345,11 @@
 				if (chambrev2 && count1 < gameTime.TotalGameTime.TotalSeconds)
 			{
 				Vchambre2(gameTime);
+			}
+
+			if (vsalon && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vsalon();
 			}
 
 							if (chambrev3 && count1 < gameTime.TotalGameTime.TotalSeconds)
@@ -547,6 +566,7 @@
 
 							if (inputdebut == "FOLIE") {
 								inputdebut = "";
+					soundEffectInstance.Stop();
 								Fin();
 							}
 
@@ -750,6 +770,8 @@
 					}
 							protected void ChambreAction(GameTime gametime)
 				{
+					soundEffectInstance.Stop ();
+					soundEffectInstance.Stop ();
 					timercave = gametime.TotalRealTime.TotalSeconds;
 					ischambreaction = true;
 					background = Content.Load<Texture2D> ("EcranNoir");
@@ -842,6 +864,17 @@
 						yeux = false ;
 						vintro = true;
 		}
+
+		protected void Vsalon()
+		{
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/Salon");
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						vsalon = false ;
+		}
+
 
 				protected void Vcuisine1(GameTime gameTime)
 		{
