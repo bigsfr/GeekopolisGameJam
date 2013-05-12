@@ -44,6 +44,12 @@
 		bool chambrev2;
 		bool chambrev3;
 		bool chambrev4;
+		bool lettref;
+		bool lettreo;
+		bool lettrel;
+		bool lettrei;
+		bool lettree;
+
 
 				bool finaction;
 				bool iscaveaction;
@@ -98,6 +104,11 @@
 			chambrev2 = false;
 			chambrev3 = false;
 			chambrev4 = false;
+		lettref = false;
+		lettreo = false;
+		 lettrel = false;
+		 lettrei = false;
+		lettree   = false;
 
 						compteurenigme = 0;
 						finish = false;
@@ -166,6 +177,17 @@
 
 					protected  void Salon ()
 					{
+						count1 =0;
+			yeux = false;
+			vintro = false;
+			ouvrir = false;
+			cavev = false;
+			cuisinev1 = false;
+			cuisinev2 = false;
+			chambrev1 = false;
+			chambrev2 = false;
+			chambrev3 = false;
+			chambrev4 = false;
 			soundEffectInstance.Stop ();
 				finaction = false;
 					inputdebut = "";
@@ -536,10 +558,10 @@
 
 								if (ischambre && ischambreaction) {
 							if (Keyboard.GetState ().IsKeyDown (Keys.A)) {
-							ChambreFin (false);
+							ChambreFin (false,gameTime);
 					}
 					if (Keyboard.GetState ().IsKeyDown (Keys.Z)) {
-							ChambreFin (true);
+							ChambreFin (true,gameTime);
 					}
 
 						}
@@ -569,11 +591,11 @@
 
 						if ((compteurA +compteurZ) > 40)
 						{
-							CaveFin (true);
+							CaveFin (true,gameTime);
 						}
 						if (Keyboard.GetState ().IsKeyDown (Keys.E))
 						{
-							CaveFin (false);
+							CaveFin (false,gameTime);
 						}
 
 
@@ -605,11 +627,11 @@
 				totalcuisine = totalcuisine - soundeffect.Duration.TotalSeconds;
 
 				if (Keyboard.GetState ().IsKeyDown (Keys.A) && totalcuisine < tempsdonne ) {
-					CuisineFin(true);
+					CuisineFin(true,gameTime);
 				}
 				if (totalcuisine > tempsdonne)
 				{
-					CuisineFin(false);
+					CuisineFin(false,gameTime);
 				}
 			}
 
@@ -666,7 +688,7 @@
 					cuisinev1 = true;
 				}
 
-			protected void CuisineFin(Boolean fin)
+			protected void CuisineFin(Boolean fin,GameTime gametime)
 			{
 			soundEffectInstance.Stop ();
 			count1 = gametime.TotalGameTime.TotalSeconds + 1;
@@ -710,7 +732,7 @@
 					chambrev1 = true;
 				}
 
-			protected void ChambreFin(Boolean fin)
+			protected void ChambreFin(Boolean fin,GameTime gametime)
 			{
 			soundEffectInstance.Stop ();
 			count1 = gametime.TotalGameTime.TotalSeconds + 1;
@@ -728,7 +750,7 @@
 				}
 			}
 
-					protected void CaveFin(Boolean fin)
+					protected void CaveFin(Boolean fin,GameTime gametime)
 			{
 						count1 = gametime.TotalGameTime.TotalSeconds + 1;
 									ouvrir = true;
@@ -916,8 +938,7 @@
 
 						font = Content.Load<SpriteFont> ("SpriteFont1");
 
-			if (true)
-			{
+			/* 
 
 						spriteBatch.DrawString (font, "X:" + girl.Position.X + "Y:" + girl.Position.Y, new Vector2 (10, 10), Color.White);
 
@@ -930,7 +951,8 @@
 				spriteBatch.DrawString (font, count1.ToString(), new Vector2 (10, 150), Color.White);
 
 						spriteBatch.DrawString (font, "gameTime:" + gameTime.TotalRealTime.Seconds, new Vector2 (10, 100), Color.White);
-			}
+
+			*/
 
 					if (isecrandebut)
 					{
@@ -941,6 +963,10 @@
 					if (issalon)
 					{
 						spriteBatch.DrawString (font,inputdebut, new Vector2 (281, 244), Color.Black);
+				if (cavevalid && chambrevalid && cuisinevalid)
+				{
+						spriteBatch.DrawString (font,"E", new Vector2 (281, 200), Color.Black);
+				}
 					}
 
 					if(iscave && iscaveaction && false)
