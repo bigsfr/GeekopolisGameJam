@@ -37,6 +37,13 @@
 		bool yeux;
 		bool vintro;
 		bool ouvrir;
+		bool cavev;
+		bool cuisinev1;
+		bool cuisinev2;
+		bool chambrev1;
+		bool chambrev2;
+		bool chambrev3;
+		bool chambrev4;
 
 				bool finaction;
 				bool iscaveaction;
@@ -84,6 +91,13 @@
 			yeux = false;
 			vintro = false;
 			ouvrir = false;
+			cavev = false;
+			cuisinev1 = false;
+			cuisinev2 = false;
+			chambrev1 = false;
+			chambrev2 = false;
+			chambrev3 = false;
+			chambrev4 = false;
 
 						compteurenigme = 0;
 						finish = false;
@@ -152,6 +166,7 @@
 
 					protected  void Salon ()
 					{
+			soundEffectInstance.Stop ();
 				finaction = false;
 					inputdebut = "";
 						issalon = true;
@@ -239,6 +254,48 @@
 			{
 				Vintro(gameTime);
 			}
+
+						if (ouvrir && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Ouvrir(gameTime);
+			}
+
+			
+						if (cavev && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vcave(gameTime);
+			}
+
+									if (cuisinev1 && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vcuisine1(gameTime);
+			}
+
+												if (cuisinev2 && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vcuisine2(gameTime);
+			}
+
+															if (chambrev1 && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vchambre1(gameTime);
+			}
+
+				if (chambrev2 && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vchambre2(gameTime);
+			}
+
+							if (chambrev3 && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vchambre3(gameTime);
+			}
+
+										if (chambrev4 && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vchambre4(gameTime);
+			}
+
 
 
 						// On quitte le jeu
@@ -539,11 +596,18 @@
 
 			if (iscuisine && iscuisineaction)
 			{
+				// timer cuisine
+				int tempsdonne = 10;
 				totalcuisine = gameTime.TotalRealTime.TotalSeconds - timercuisine;
-				if (Keyboard.GetState ().IsKeyDown (Keys.A) && totalcuisine < 20 ) {
+				soundeffect = Content.Load<SoundEffect> ("Sounds/VCuisine1");			
+				totalcuisine = totalcuisine - soundeffect.Duration.TotalSeconds ;
+				soundeffect = Content.Load<SoundEffect> ("Sounds/VCuisine2");			
+				totalcuisine = totalcuisine - soundeffect.Duration.TotalSeconds;
+
+				if (Keyboard.GetState ().IsKeyDown (Keys.A) && totalcuisine < tempsdonne ) {
 					CuisineFin(true);
 				}
-				if (totalcuisine > 20)
+				if (totalcuisine > tempsdonne)
 				{
 					CuisineFin(false);
 				}
@@ -594,13 +658,19 @@
 
 						protected void CuisineAction(GameTime gametime)
 				{
+			         soundEffectInstance.Stop ();
 					timercuisine = gametime.TotalRealTime.TotalSeconds;
 					iscuisineaction = true;
 					background = Content.Load<Texture2D> ("EcranNoir");
+					count1 = gametime.TotalGameTime.TotalSeconds + 1;
+					cuisinev1 = true;
 				}
 
 			protected void CuisineFin(Boolean fin)
 			{
+			soundEffectInstance.Stop ();
+			count1 = gametime.TotalGameTime.TotalSeconds + 1;
+			ouvrir = true;
 				finaction = true;
 				if (fin)
 				{
@@ -636,10 +706,16 @@
 					timercave = gametime.TotalRealTime.TotalSeconds;
 					ischambreaction = true;
 					background = Content.Load<Texture2D> ("EcranNoir");
+					count1 = gametime.TotalGameTime.TotalSeconds + 1;
+					chambrev1 = true;
 				}
 
 			protected void ChambreFin(Boolean fin)
 			{
+			soundEffectInstance.Stop ();
+			count1 = gametime.TotalGameTime.TotalSeconds + 1;
+			ouvrir = true;
+
 				finaction = true;
 				if (fin)
 				{
@@ -654,6 +730,9 @@
 
 					protected void CaveFin(Boolean fin)
 			{
+						count1 = gametime.TotalGameTime.TotalSeconds + 1;
+									ouvrir = true;
+			soundEffectInstance.Stop ();
 				finaction = true;
 				if (fin)
 				{
@@ -668,9 +747,12 @@
 
 				protected void CaveAction(GameTime gametime)
 				{
+			soundEffectInstance.Stop ();
 					timercave = gametime.TotalRealTime.TotalSeconds;
 					iscaveaction = true;
 					background = Content.Load<Texture2D> ("EcranNoir");
+					count1 = gametime.TotalGameTime.TotalSeconds + 1;
+					cavev = true;
 				}
 
 					protected void Debut(GameTime gameTime)
@@ -714,6 +796,84 @@
 						vintro = true;
 		}
 
+				protected void Vcuisine1(GameTime gameTime)
+		{
+
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VCuisine1");
+						count1 = soundeffect.Duration.TotalSeconds + 1 + gameTime.TotalGameTime.TotalSeconds;
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						cuisinev1 = false ;
+						cuisinev2 = true;
+		}
+
+						protected void Vcuisine2(GameTime gameTime)
+		{
+
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VCuisine2");
+						count1 = soundeffect.Duration.TotalSeconds + 1 + gameTime.TotalGameTime.TotalSeconds;
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						cuisinev2 = false;
+		}
+
+
+						protected void Vchambre1(GameTime gameTime)
+		{
+
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VChambre1");
+						count1 = soundeffect.Duration.TotalSeconds + 1 + gameTime.TotalGameTime.TotalSeconds;
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						chambrev1 = false ;
+						chambrev2 = true;
+		}
+
+								protected void Vchambre2(GameTime gameTime)
+		{
+
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VChambre2");
+						count1 = soundeffect.Duration.TotalSeconds + 1 + gameTime.TotalGameTime.TotalSeconds;
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						chambrev2 = false ;
+						chambrev3 = true;
+		}
+
+										protected void Vchambre3(GameTime gameTime)
+		{
+
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VChambre3");
+						count1 = soundeffect.Duration.TotalSeconds + 1 + gameTime.TotalGameTime.TotalSeconds;
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						chambrev3 = false ;
+						chambrev4 = true;
+		}
+												protected void Vchambre4(GameTime gameTime)
+		{
+
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VChambre4");
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						chambrev4 = false;
+		}
+
+
+
+
 		protected void Ouvrir(GameTime gameTime)
 		{
 						soundEffectInstance.Stop ();
@@ -724,6 +884,23 @@
 						ouvrir = false;
 
 		}
+
+				protected void Vcave(GameTime gameTime)
+		{
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VCave");
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+			count1 = soundeffect.Duration.TotalSeconds + 1 + gameTime.TotalGameTime.TotalSeconds;
+
+			cavev = false;
+
+
+		}
+
+
+
 
 					protected override void Draw (GameTime gameTime)
 					{
