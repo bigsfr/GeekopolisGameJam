@@ -34,6 +34,9 @@
 					bool isecrandebut;
 					bool isecrandemarrage;
 					bool isfin;
+		bool yeux;
+		bool vintro;
+		bool ouvrir;
 
 				bool finaction;
 				bool iscaveaction;
@@ -50,6 +53,8 @@
 			bool iscuisineaction;
 			int compteurA;
 			int compteurZ;
+		// compteur son
+		double count1;
 
 		bool cuisinevalid;
 		bool chambrevalid;
@@ -75,6 +80,10 @@
 					{
 
 						finaction = false;
+			count1 =0;
+			yeux = false;
+			vintro = false;
+			ouvrir = false;
 
 						compteurenigme = 0;
 						finish = false;
@@ -221,6 +230,16 @@
 							Demarrage();
 						}
 
+			if (yeux && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Yeux(gameTime);
+			}
+
+				if (vintro && count1 < gameTime.TotalGameTime.TotalSeconds)
+			{
+				Vintro(gameTime);
+			}
+
 
 						// On quitte le jeu
 						if (Keyboard.GetState ().IsKeyDown (Keys.Escape))
@@ -332,7 +351,7 @@
 							if (Keyboard.GetState ().IsKeyDown (Keys.Enter)) {
 								isecrandebut = true;
 							isecrandemarrage = false;
-							Debut ();
+							Debut (gameTime);
 						}
 							}
 
@@ -624,12 +643,12 @@
 				finaction = true;
 				if (fin)
 				{
-					background = Content.Load<Texture2D> ("EcranParentBon");
+					background = Content.Load<Texture2D> ("EcranParentsBon");
 				chambrevalid = true;
 				}
 				else
 				{
-					background = Content.Load<Texture2D> ("EcranParentMauvais");
+					background = Content.Load<Texture2D> ("EcranParentsMauvais");
 				}
 			}
 
@@ -654,15 +673,57 @@
 					background = Content.Load<Texture2D> ("EcranNoir");
 				}
 
-					protected void Debut()
+					protected void Debut(GameTime gameTime)
 					{
 						issalon = false;
 						iscave = false;
+		
 						isecrandebut = true;
 						girl.LoadContent ("Black");
 						background = Content.Load<Texture2D> ("EcranDebut");
 
+
+								count1 = gameTime.TotalGameTime.TotalSeconds  + 2;
+								yeux = true;
 					}
+
+		protected void Vintro(GameTime gameTime)
+		{
+
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VIntro");
+						count1 = soundeffect.Duration.TotalSeconds + 1 + gameTime.TotalGameTime.TotalSeconds;
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						vintro = false;
+						ouvrir = true;
+						
+		}
+
+		protected void Yeux(GameTime gameTime)
+		{
+
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VYeux");
+						count1 = soundeffect.Duration.TotalSeconds + 1 + gameTime.TotalGameTime.TotalSeconds;
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						yeux = false ;
+						vintro = true;
+		}
+
+		protected void Ouvrir(GameTime gameTime)
+		{
+						soundEffectInstance.Stop ();
+						soundeffect = Content.Load<SoundEffect> ("Sounds/VDecompte");
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.IsLooped = false;
+						soundEffectInstance.Play ();
+						ouvrir = false;
+
+		}
 
 					protected override void Draw (GameTime gameTime)
 					{
@@ -678,6 +739,9 @@
 
 						font = Content.Load<SpriteFont> ("SpriteFont1");
 
+			if (true)
+			{
+
 						spriteBatch.DrawString (font, "X:" + girl.Position.X + "Y:" + girl.Position.Y, new Vector2 (10, 10), Color.White);
 
 
@@ -685,21 +749,24 @@
 
 						spriteBatch.DrawString (font, "time:" + time, new Vector2 (10, 70), Color.White);
 
-						spriteBatch.DrawString (font, "gameTime:" + gameTime.TotalRealTime.Seconds, new Vector2 (10, 100), Color.White);
+				spriteBatch.DrawString (font, yeux.ToString(), new Vector2 (10, 120), Color.White);
+				spriteBatch.DrawString (font, count1.ToString(), new Vector2 (10, 150), Color.White);
 
+						spriteBatch.DrawString (font, "gameTime:" + gameTime.TotalRealTime.Seconds, new Vector2 (10, 100), Color.White);
+			}
 
 					if (isecrandebut)
 					{
-						spriteBatch.DrawString (font,inputdebut, new Vector2 (10, 130), Color.White);
+						spriteBatch.DrawString (font,inputdebut, new Vector2 (300, 280 ), Color.White);
 
 					}
 
 					if (issalon)
 					{
-						spriteBatch.DrawString (font,inputdebut, new Vector2 (10, 130), Color.White);
+						spriteBatch.DrawString (font,inputdebut, new Vector2 (281, 244), Color.Black);
 					}
 
-					if(iscave && iscaveaction)
+					if(iscave && iscaveaction && false)
 					{
 						spriteBatch.DrawString (font,timercave.ToString(), new Vector2 (10, 130), Color.White);
 						spriteBatch.DrawString (font,totalcave.ToString(), new Vector2 (10, 150), Color.White);
@@ -716,7 +783,6 @@
 
 						// On affiche le vaisseau à la position définie dans Update()
 						girl.Draw (spriteBatch);
-
 
 
 
