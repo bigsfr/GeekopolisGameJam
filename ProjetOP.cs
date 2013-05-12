@@ -46,9 +46,15 @@
 				double timercave;
 				double totalcave;
 			double timercuisine;
+		double totalcuisine;
 			bool iscuisineaction;
 			int compteurA;
 			int compteurZ;
+
+		bool cuisinevalid;
+		bool chambrevalid;
+		bool cavevalid;
+		bool salonvalid;
 
 					public ProjetOP ()
 					{
@@ -85,6 +91,12 @@
 				compteurZ= 0;
 						time = 0;
 						inputdebut = "";
+		 cuisinevalid=false;
+		chambrevalid=false;
+		 cavevalid=false;
+		 salonvalid=false;
+			totalcave = 0;
+			totalcuisine=0;
 
 
 						base.Initialize ();
@@ -146,6 +158,8 @@
 						isecrandemarrage = false;
 					isfin = false;
 					compteurenigme= 0;
+			totalcuisine = 0;
+			totalcave = 0;
 				compteurA = 0;
 				compteurZ = 0;
 						// Fond de l'écran
@@ -153,11 +167,16 @@
 						// Texture de la fille
 						girl.LoadContent ("Girl");
 
+			if (cuisinevalid && cavevalid && chambrevalid)
+			{
+			}
+
 						soundEffectInstance.Stop ();
 						soundeffect = Content.Load<SoundEffect> ("Sounds/Salon");
 						soundEffectInstance = soundeffect.CreateInstance ();
 						soundEffectInstance.IsLooped = true;
 						soundEffectInstance.Play ();
+		
 
 					}
 
@@ -243,13 +262,56 @@
 								girl.Position = old;
 							}
 
+
+				// entree droite
+					if ((girl.Position.X >= 323 && girl.Position.X <= 347) && (girl.Position.Y >= 273 && girl.Position.Y <= 450)) {
+								girl.Position = old;
+							}
+				// entree gauche
+				if ((girl.Position.X >= 233 && girl.Position.X <= 255) && (girl.Position.Y >= 273 && girl.Position.Y <= 450)) {
+								girl.Position = old;
+							}
+
+
+							// coin droit
+				if ((girl.Position.X >= 347 && girl.Position.X <= 489) && (girl.Position.Y >= 340 && girl.Position.Y <= 342)) {
+								girl.Position = old;
+							}
+
+				//mur droit 
+							
+				if ((girl.Position.X >= 489 && girl.Position.X <= 495) && (girl.Position.Y >= 0 && girl.Position.Y <= 342)) {
+								girl.Position = old;
+							}
+				// mur gauche 
+
+					if ((girl.Position.X >= 97 && girl.Position.X <= 129) && (girl.Position.Y >= 0 && girl.Position.Y <= 269)) {
+								girl.Position = old;
+							}
+
+				//MUR DU HAUT
+								if ((girl.Position.X >= 131 && girl.Position.X <= 495) && (girl.Position.Y >= 0 && girl.Position.Y <= 2)) {
+								girl.Position = old;
+							}
+						// bas gauche
+
+					if ((girl.Position.X >= 131 && girl.Position.X <= 147) && (girl.Position.Y >= 264 && girl.Position.Y <= 312)) {
+								girl.Position = old;
+							}
+
+										// bas droit
+
+					if ((girl.Position.X >= 201 && girl.Position.X <= 247) && (girl.Position.Y >= 262 && girl.Position.Y <= 312)) {
+								girl.Position = old;
+							}
+
 							// ici la cave
-							if ((girl.Position.X >= 257 && girl.Position.X <= 359) && (girl.Position.Y >= 6 && girl.Position.Y <= 13)) {
+							if ((girl.Position.X >= 333 && girl.Position.X <= 359) && (girl.Position.Y >= 0 && girl.Position.Y <= 13)) {
 
 								Cave();
 
 							}
-										// ici la cave
+										// ici la cuisine
 							if ((girl.Position.X >= 151 && girl.Position.X <= 189) && (girl.Position.Y >= 265 && girl.Position.Y <= 272)) {
 
 								Cuisine();
@@ -456,6 +518,18 @@
 					}
 				}
 
+			if (iscuisine && iscuisineaction)
+			{
+				totalcuisine = gameTime.TotalRealTime.TotalSeconds - timercuisine;
+				if (Keyboard.GetState ().IsKeyDown (Keys.A) && totalcuisine < 20 ) {
+					CuisineFin(true);
+				}
+				if (totalcuisine > 20)
+				{
+					CuisineFin(false);
+				}
+			}
+
 						// Si la partie est terminée on réinitialise le tout
 						if (finish)
 							Initialize ();
@@ -506,6 +580,21 @@
 					background = Content.Load<Texture2D> ("EcranNoir");
 				}
 
+			protected void CuisineFin(Boolean fin)
+			{
+				finaction = true;
+				if (fin)
+				{
+					background = Content.Load<Texture2D> ("EcranCuisineBon");
+				cuisinevalid = true;
+				}
+				else
+				{
+					background = Content.Load<Texture2D> ("EcranCuisineMauvais");
+				}
+			}
+
+
 
 							protected  void Chambre ()
 					{
@@ -536,6 +625,7 @@
 				if (fin)
 				{
 					background = Content.Load<Texture2D> ("EcranParentBon");
+				chambrevalid = true;
 				}
 				else
 				{
@@ -549,6 +639,7 @@
 				if (fin)
 				{
 					background = Content.Load<Texture2D> ("EcranCaveBon");
+				cavevalid = true;
 				}
 				else
 				{
@@ -616,6 +707,12 @@
 					spriteBatch.DrawString (font,"CompteurZ"+compteurZ.ToString(), new Vector2 (10, 190), Color.White);
 
 					}
+
+			if (iscuisine && iscuisineaction)
+			{
+										spriteBatch.DrawString (font,timercuisine.ToString(), new Vector2 (10, 130), Color.White);
+						spriteBatch.DrawString (font,totalcuisine.ToString(), new Vector2 (10, 150), Color.White);
+			}
 
 						// On affiche le vaisseau à la position définie dans Update()
 						girl.Draw (spriteBatch);
