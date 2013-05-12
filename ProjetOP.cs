@@ -57,6 +57,9 @@
 					Vector2 textSize;
 					SoundEffect soundeffect;
 					SoundEffectInstance soundEffectInstance;
+
+							SoundEffect soundeffect2;
+					SoundEffectInstance soundEffectInstance2;
 					int time;
 					string inputdebut;
 				double timercave;
@@ -213,8 +216,28 @@
 						// Texture de la fille
 						girl.LoadContent ("Girl");
 
-			if (cuisinevalid && cavevalid && chambrevalid)
+			if (cuisinevalid && !lettref)
 			{
+						soundeffect2 = Content.Load<SoundEffect> ("Sounds/F");
+						soundEffectInstance2 = soundeffect.CreateInstance ();
+						soundEffectInstance2.Play ();
+						lettref = false;
+			}
+
+						if (chambrevalid && !lettrei)
+			{
+						soundeffect2 = Content.Load<SoundEffect> ("Sounds/I");
+						soundEffectInstance2 = soundeffect.CreateInstance ();
+						soundEffectInstance2.Play ();
+						lettrei = false;
+			}
+
+			if (chambrevalid && !lettreo)
+			{
+						soundeffect2 = Content.Load<SoundEffect> ("Sounds/O");
+						soundEffectInstance2 = soundeffect.CreateInstance ();
+						soundEffectInstance2.Play ();
+						lettreo = false;
 			}
 
 						soundEffectInstance.Stop ();
@@ -714,7 +737,7 @@
 
 						ischambre = true;
 						girl.LoadContent ("Black");
-						background = Content.Load<Texture2D> ("EcranParentDebut");
+						background = Content.Load<Texture2D> ("EcranParentsDebut");
 						girl.Position = new Vector2 (267, 313);
 						soundEffectInstance.Stop ();
 						soundeffect = Content.Load<SoundEffect> ("Sounds/Chambre");
