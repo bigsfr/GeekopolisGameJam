@@ -34,6 +34,8 @@
 				bool isecrandebut;
 				bool isecrandemarrage;
 				bool isfin;
+
+			bool finaction;
 			bool iscaveaction;
 				SpriteFont font;
 				Vector2 textSize;
@@ -43,6 +45,8 @@
 				string inputdebut;
 			double timercave;
 			double totalcave;
+		double timercuisine;
+		bool iscuisineaction;
 		int compteurA;
 		int compteurZ;
 
@@ -64,12 +68,14 @@
 				protected override void Initialize ()
 				{
 
+					finaction = false;
 
 					compteurenigme = 0;
 					finish = false;
 					ischambre = false;
 					iscuisine = false;
-
+			ischambreaction= false;
+			iscuisineaction= false;
 					iscave = false;
 				    iscaveaction = false;
 					issalon = false;
@@ -125,6 +131,7 @@
 
 				protected  void Salon ()
 				{
+			finaction = false;
 				inputdebut = "";
 					issalon = true;
 					ischambre = false;
@@ -132,12 +139,15 @@
 					iscave = false;
 				    iscaveaction = false;
 					ischambreaction = false;
+			iscuisineaction = false;
 					isecrandebut = false;
 					iscave = false;
 					isecrandebut = false;
 					isecrandemarrage = false;
 				isfin = false;
 				compteurenigme= 0;
+			compteurA = 0;
+			compteurZ = 0;
 					// Fond de l'écran
 					background = Content.Load<Texture2D> ("Salon");
 					// Texture de la fille
@@ -166,7 +176,7 @@
 					girl.Position = new Vector2 (345, 21);
 
 					soundEffectInstance.Stop ();
-					soundeffect = Content.Load<SoundEffect> ("Sounds/Cave");
+					soundeffect = Content.Load<SoundEffect> ("Sounds/Fin");
 					soundEffectInstance = soundeffect.CreateInstance ();
 					soundEffectInstance.IsLooped = true;
 					soundEffectInstance.Play ();
@@ -233,8 +243,20 @@
 							girl.Position = old;
 						}
 
-						// ici la cave tirstan
-						if ((girl.Position.X >= 257 && girl.Position.X <= 277) && (girl.Position.Y >= 300 && girl.Position.Y <= 310)) {
+						// ici la cave
+						if ((girl.Position.X >= 257 && girl.Position.X <= 359) && (girl.Position.Y >= 6 && girl.Position.Y <= 13)) {
+
+							Cave();
+
+						}
+									// ici la cave
+						if ((girl.Position.X >= 151 && girl.Position.X <= 189) && (girl.Position.Y >= 265 && girl.Position.Y <= 272)) {
+
+							Cuisine();
+
+						}
+									// ici la chambre tirstan
+						if ((girl.Position.X >= 253 && girl.Position.X <= 279) && (girl.Position.Y >= 300 && girl.Position.Y <= 310)) {
 
 							Chambre ();
 
@@ -345,7 +367,7 @@
 
 					}
 
-					if (iscave || ischambre){
+					if (iscave || ischambre || iscuisine ){
 					if (Keyboard.GetState ().IsKeyDown (Keys.Q)) {
 						Salon ();
 					}
@@ -359,6 +381,13 @@
 					}
 				}
 
+						if (iscuisine && !iscuisineaction) {
+									if (Keyboard.GetState ().IsKeyDown (Keys.Enter)) {
+						CuisineAction (gameTime);
+
+					}
+				}
+
 					if (ischambre && !ischambreaction) {
 						if (Keyboard.GetState ().IsKeyDown (Keys.Enter)) {
 						ChambreAction (gameTime);
@@ -366,6 +395,18 @@
 					}
 
 				}
+
+							if (ischambre && ischambreaction) {
+						if (Keyboard.GetState ().IsKeyDown (Keys.A)) {
+						ChambreFin (false);
+				}
+				if (Keyboard.GetState ().IsKeyDown (Keys.Z)) {
+						ChambreFin (true);
+				}
+
+					}
+
+				
 
 						if(iscave && iscaveaction)
 					{
@@ -392,6 +433,13 @@
 
 					}
 
+			if (finaction)
+			{
+				if (Keyboard.GetState ().IsKeyDown (Keys.Enter)) {
+					Salon ();
+				}
+			}
+
 					// Si la partie est terminée on réinitialise le tout
 					if (finish)
 						Initialize ();
@@ -417,6 +465,32 @@
 
 				}
 
+						protected  void Cuisine ()
+				{
+
+					issalon = false;
+
+					iscuisine = true;
+					girl.LoadContent ("Black");
+					background = Content.Load<Texture2D> ("EcranCuisineDebut");
+					girl.Position = new Vector2 (345, 21);
+
+					soundEffectInstance.Stop ();
+					soundeffect = Content.Load<SoundEffect> ("Sounds/Cuisine");
+					soundEffectInstance = soundeffect.CreateInstance ();
+					soundEffectInstance.IsLooped = true;
+					soundEffectInstance.Play ();
+
+				}
+
+					protected void CuisineAction(GameTime gametime)
+			{
+				timercuisine = gametime.TotalRealTime.TotalSeconds;
+				iscuisineaction = true;
+				background = Content.Load<Texture2D> ("EcranNoir");
+			}
+
+
 						protected  void Chambre ()
 				{
 
@@ -427,7 +501,7 @@
 					background = Content.Load<Texture2D> ("EcranParentDebut");
 					girl.Position = new Vector2 (267, 313);
 					soundEffectInstance.Stop ();
-					soundeffect = Content.Load<SoundEffect> ("Sounds/Cave");
+					soundeffect = Content.Load<SoundEffect> ("Sounds/Chambre");
 					soundEffectInstance = soundeffect.CreateInstance ();
 					soundEffectInstance.IsLooped = true;
 					soundEffectInstance.Play ();
@@ -439,6 +513,19 @@
 				ischambreaction = true;
 				background = Content.Load<Texture2D> ("EcranNoir");
 			}
+
+		protected void ChambreFin(Boolean fin)
+		{
+			finaction = true;
+			if (fin)
+			{
+				background = Content.Load<Texture2D> ("EcranParentBon");
+			}
+			else
+			{
+				background = Content.Load<Texture2D> ("EcranParentMauvais");
+			}
+		}
 
 			protected void CaveAction(GameTime gametime)
 			{
@@ -496,6 +583,8 @@
 				{
 					spriteBatch.DrawString (font,timercave.ToString(), new Vector2 (10, 130), Color.White);
 					spriteBatch.DrawString (font,totalcave.ToString(), new Vector2 (10, 150), Color.White);
+				spriteBatch.DrawString (font,"CompteurA"+compteurA.ToString(), new Vector2 (10, 170), Color.White);
+				spriteBatch.DrawString (font,"CompteurZ"+compteurZ.ToString(), new Vector2 (10, 190), Color.White);
 
 				}
 
