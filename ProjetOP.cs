@@ -107,11 +107,11 @@
 			chambrev2 = false;
 			chambrev3 = false;
 			chambrev4 = false;
-		lettref = false;
-		lettreo = false;
-		 lettrel = false;
-		 lettrei = false;
-		lettree   = false;
+		lettref = true;
+		lettreo = true;
+		 lettrel = true;
+		 lettrei = true;
+		lettree   = true;
 
 						compteurenigme = 0;
 						finish = false;
@@ -164,7 +164,7 @@
 
 
 
-						// Position initiale du vaisseau
+						// Position initiale du girl
 						girl.Position = new Vector2 (
 			                (graphics.PreferredBackBufferWidth / 2) - girl.Width / 2,
 			                graphics.PreferredBackBufferHeight - girl.Height * 2);
@@ -216,35 +216,37 @@
 						// Texture de la fille
 						girl.LoadContent ("Girl");
 
-			if (cuisinevalid && !lettref)
-			{
-						soundeffect2 = Content.Load<SoundEffect> ("Sounds/F");
-						soundEffectInstance2 = soundeffect.CreateInstance ();
-						soundEffectInstance2.Play ();
-						lettref = false;
-			}
-
-						if (chambrevalid && !lettrei)
-			{
-						soundeffect2 = Content.Load<SoundEffect> ("Sounds/I");
-						soundEffectInstance2 = soundeffect.CreateInstance ();
-						soundEffectInstance2.Play ();
-						lettrei = false;
-			}
-
-			if (chambrevalid && !lettreo)
-			{
-						soundeffect2 = Content.Load<SoundEffect> ("Sounds/O");
-						soundEffectInstance2 = soundeffect.CreateInstance ();
-						soundEffectInstance2.Play ();
-						lettreo = false;
-			}
-
 						soundEffectInstance.Stop ();
 						soundeffect = Content.Load<SoundEffect> ("Sounds/Salon");
 						soundEffectInstance = soundeffect.CreateInstance ();
 						soundEffectInstance.IsLooped = true;
 						soundEffectInstance.Play ();
+
+			
+			if (cuisinevalid && lettref)
+			{
+						soundeffect = Content.Load<SoundEffect> ("Sounds/F");
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.Play ();
+						lettref = false;
+			}
+
+						if (chambrevalid && lettrei)
+			{
+						soundeffect = Content.Load<SoundEffect> ("Sounds/I");
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.Play ();
+						lettrei = false;
+			}
+
+			if (cavevalid && lettreo)
+			{
+						soundeffect = Content.Load<SoundEffect> ("Sounds/O");
+						soundEffectInstance = soundeffect.CreateInstance ();
+						soundEffectInstance.Play ();
+						lettreo = false;
+			}
+
 		
 
 					}
@@ -358,7 +360,7 @@
 
 						if (issalon) {
 							Vector2 old = girl.Position;
-							// Déplacement du vaisseau et gestion des collisions avec les bords
+							// Déplacement du girl et gestion des collisions avec les bords
 							if (Keyboard.GetState ().IsKeyDown (Keys.Up) && girl.Position.Y > 0)
 								girl.Position = new Vector2 (girl.Position.X, girl.Position.Y - girl.Speed.Y);
 
@@ -1000,14 +1002,15 @@
 					spriteBatch.DrawString (font,"CompteurZ"+compteurZ.ToString(), new Vector2 (10, 190), Color.White);
 
 					}
-
+			/*
 			if (iscuisine && iscuisineaction)
 			{
 										spriteBatch.DrawString (font,timercuisine.ToString(), new Vector2 (10, 130), Color.White);
 						spriteBatch.DrawString (font,totalcuisine.ToString(), new Vector2 (10, 150), Color.White);
 			}
+			*/
 
-						// On affiche le vaisseau à la position définie dans Update()
+
 						girl.Draw (spriteBatch);
 
 
