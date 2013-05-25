@@ -16,6 +16,10 @@ http://monogame.codeplex.com/releases/view/102870
 http://connect.creativelabs.com/developer/Wiki/OpenAL%20Installer%20for%20Windows.aspx
 
 
+Pour le compiler vous meme (mac/windows/linux):
+
+
+
 
 L'executable est dans bin/Debug
 
