@@ -146,7 +146,7 @@
 
 					protected override void LoadContent ()
 					{
-						soundeffect = Content.Load<SoundEffect> ("Sounds/Salon");
+						soundeffect = Content.Load<SoundEffect> ("Sounds/SIntro");
 						soundEffectInstance = soundeffect.CreateInstance ();
 						soundEffectInstance.IsLooped = true;
 						soundEffectInstance.Play ();
