@@ -451,7 +451,7 @@
 							if ((girl.Position.X >= 333 && girl.Position.X <= 359) && (girl.Position.Y >= 0 && girl.Position.Y <= 13)) {
 
 								Cave();
-
+					//zegeekopolis2013
 							}
 										// ici la cuisine
 							if ((girl.Position.X >= 151 && girl.Position.X <= 189) && (girl.Position.Y >= 265 && girl.Position.Y <= 272)) {
